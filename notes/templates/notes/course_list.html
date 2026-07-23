@@ -1,3 +1,8 @@
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
 <h1>My Courses</h1>
 <ul>
   {% for course in courses %}
