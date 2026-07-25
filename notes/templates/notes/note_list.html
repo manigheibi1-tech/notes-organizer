@@ -1,6 +1,12 @@
 <h1>Notes for {{ course.title }}</h1>
 <a href="{% url 'course_list' %}">Back to courses</a>
 <a href="{% url 'note_create' course.pk %}">+ New note</a>
+
+<form method="get">
+  <input type="text" name="q" value="{{ query }}" placeholder="Search notes...">
+  <button type="submit">Search</button>
+</form>
+
 <ul>
   {% for note in notes %}
     <li>
@@ -9,6 +15,6 @@
       <a href="{% url 'note_delete' course.pk note.pk %}">Delete</a>
     </li>
   {% empty %}
-    <li>No notes yet.</li>
+    <li>No notes found.</li>
   {% endfor %}
 </ul>

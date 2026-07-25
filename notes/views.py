@@ -4,6 +4,7 @@ from .models import Course, Note
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CourseForm, NoteForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 @login_required
 def course_list(request):
@@ -56,8 +57,11 @@ def course_delete(request, pk):
 @login_required
 def note_list(request, course_pk):
     course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    query = request.GET.get('q', '')
     notes = course.notes.all()
-    return render(request, 'notes/note_list.html', {'course': course, 'notes': notes})
+    if query:
+        notes = notes.filter(Q(title__icontains=query) | Q(content__icontains=query))
+    return render(request, 'notes/note_list.html', {'course': course, 'notes': notes, 'query': query})
 
 @login_required
 def note_create(request, course_pk):
