@@ -9,6 +9,7 @@
   {% for course in courses %}
     <li>
       {{ course.title }}
+      <a href="{% url 'note_list' course.pk %}">View notes</a>
       <a href="{% url 'course_edit' course.pk %}">Edit</a>
       <a href="{% url 'course_delete' course.pk %}">Delete</a>
     </li>

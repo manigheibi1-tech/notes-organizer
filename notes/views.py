@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Course
+from .models import Course, Note
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CourseForm
+from .forms import CourseForm, NoteForm
 from django.shortcuts import get_object_or_404
 
 @login_required
@@ -52,3 +52,45 @@ def course_delete(request, pk):
         course.delete()
         return redirect('course_list')
     return render(request, 'notes/course_confirm_delete.html', {'course': course})
+
+@login_required
+def note_list(request, course_pk):
+    course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    notes = course.notes.all()
+    return render(request, 'notes/note_list.html', {'course': course, 'notes': notes})
+
+@login_required
+def note_create(request, course_pk):
+    course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.course = course
+            note.save()
+            return redirect('note_list', course_pk=course.pk)
+    else:
+        form = NoteForm()
+    return render(request, 'notes/note_form.html', {'form': form, 'course': course})
+
+@login_required
+def note_edit(request, course_pk, pk):
+    course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    note = get_object_or_404(Note, pk=pk, course=course)
+    if request.method == 'POST':
+        form = NoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return redirect('note_list', course_pk=course.pk)
+    else:
+        form = NoteForm(instance=note)
+    return render(request, 'notes/note_form.html', {'form': form, 'course': course})
+
+@login_required
+def note_delete(request, course_pk, pk):
+    course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    note = get_object_or_404(Note, pk=pk, course=course)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('note_list', course_pk=course.pk)
+    return render(request, 'notes/note_confirm_delete.html', {'note': note, 'course': course})

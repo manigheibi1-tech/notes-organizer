@@ -1,0 +1,14 @@
+<h1>Notes for {{ course.title }}</h1>
+<a href="{% url 'course_list' %}">Back to courses</a>
+<a href="{% url 'note_create' course.pk %}">+ New note</a>
+<ul>
+  {% for note in notes %}
+    <li>
+      {{ note.title }}
+      <a href="{% url 'note_edit' course.pk note.pk %}">Edit</a>
+      <a href="{% url 'note_delete' course.pk note.pk %}">Delete</a>
+    </li>
+  {% empty %}
+    <li>No notes yet.</li>
+  {% endfor %}
+</ul>
