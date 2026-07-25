@@ -4,9 +4,14 @@
 </form>
 
 <h1>My Courses</h1>
+<a href="{% url 'course_create' %}">+ New course</a>
 <ul>
   {% for course in courses %}
-    <li>{{ course.title }}</li>
+    <li>
+      {{ course.title }}
+      <a href="{% url 'course_edit' course.pk %}">Edit</a>
+      <a href="{% url 'course_delete' course.pk %}">Delete</a>
+    </li>
   {% empty %}
     <li>No courses yet.</li>
   {% endfor %}
