@@ -108,3 +108,7 @@ def note_detail(request, course_pk, pk):
     course = get_object_or_404(Course, pk=course_pk, owner=request.user)
     note = get_object_or_404(Note, pk=pk, course=course)
     return render(request, 'notes/note_detail.html', {'course': course, 'note': note})
+
+@login_required
+def logout_confirm(request):
+    return render(request, 'notes/logout_confirm.html')
