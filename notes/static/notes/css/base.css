@@ -1,0 +1,84 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.navbar {
+  background-color: #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  color: #cbd5e1;
+  font-size: 0.9em;
+}
+
+.inline-form {
+  margin: 0;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  margin-inline-end: 10px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2 {
+  color: #1e293b;
+}
+
+form {
+  margin: 15px 0;
+}
+
+input[type="text"], input[type="password"] {
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 250px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+}

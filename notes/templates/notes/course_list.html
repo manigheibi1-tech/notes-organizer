@@ -1,19 +1,52 @@
-<form method="post" action="{% url 'logout' %}">
-  {% csrf_token %}
-  <button type="submit">Logout</button>
-</form>
+{% extends 'notes/base.html' %}
+{% load static %}
+{% block title %}My Courses{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'notes/css/course_list.css' %}">
+{% endblock %}
+{% block content %}
 
-<h1>My Courses</h1>
-<a href="{% url 'course_create' %}">+ New course</a>
-<ul>
+<div class="page-heading">
+  <h1>My Courses</h1>
+  <a href="{% url 'course_create' %}" class="btn-primary">+ New Course</a>
+</div>
+
+<div class="tree">
   {% for course in courses %}
-    <li>
-      {{ course.title }}
-      <a href="{% url 'note_list' course.pk %}">View notes</a>
-      <a href="{% url 'course_edit' course.pk %}">Edit</a>
-      <a href="{% url 'course_delete' course.pk %}">Delete</a>
-    </li>
+    <details class="course-node">
+      <summary>
+        <span class="course-title">{{ course.title }}</span>
+        <span class="course-date">Created {{ course.created_at|date:"M d, Y" }}</span>
+          <span class="course-actions">
+            <a href="{% url 'note_list' course.pk %}" title="View notes">View notes</a>
+            <a href="{% url 'note_create' course.pk %}" title="Add note">＋ Note</a>
+            <a href="{% url 'course_edit' course.pk %}" title="Edit course">Edit</a>
+            <a href="{% url 'course_delete' course.pk %}" title="Delete course" class="danger">Delete</a>
+          </span>
+      </summary>
+
+      {% if course.description %}
+        <p class="course-description">{{ course.description }}</p>
+      {% endif %}
+
+      <ul class="note-list">
+        {% for note in course.notes.all %}
+          <li class="note-item">
+            <a href="{% url 'note_detail' course.pk note.pk %}" class="note-title">📝 {{ note.title }}</a>
+            <span class="note-date">{{ note.created_at|date:"M d, Y" }}</span>
+            <span class="note-actions">
+              <a href="{% url 'note_edit' course.pk note.pk %}">Edit</a>
+              <a href="{% url 'note_delete' course.pk note.pk %}" class="danger">Delete</a>
+            </span>
+          </li>
+        {% empty %}
+          <li class="note-empty">No notes in this course yet.</li>
+        {% endfor %}
+      </ul>
+    </details>
   {% empty %}
-    <li>No courses yet.</li>
+    <p class="empty-state">You haven't created any courses yet. Start by adding one!</p>
   {% endfor %}
-</ul>
+</div>
+
+{% endblock %}

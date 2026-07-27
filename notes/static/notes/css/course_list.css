@@ -1,0 +1,109 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-node {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.course-node summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.course-node summary::-webkit-details-marker {
+  display: none;
+}
+
+.course-node summary::before {
+  content: "▶";
+  display: inline-block;
+  margin-inline-end: 8px;
+  font-size: 0.7em;
+  color: #94a3b8;
+  transition: transform 0.15s ease;
+}
+
+.course-node[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.course-title {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: #1e293b;
+}
+
+.course-date,
+.note-date {
+  color: #94a3b8;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.course-actions a,
+.note-actions a {
+  font-size: 0.85em;
+  margin-inline-start: 10px;
+}
+
+.course-actions .danger,
+.note-actions .danger {
+  color: #dc2626;
+}
+
+.course-description {
+  color: #64748b;
+  font-size: 0.9em;
+  margin: 8px 0 0 0;
+}
+
+.note-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0 0;
+  border-inline-start: 2px solid #e2e8f0;
+  padding-inline-start: 16px;
+}
+
+.note-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.note-item:last-child {
+  border-bottom: none;
+}
+
+.note-empty {
+  color: #94a3b8;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.empty-state {
+  text-align: center;
+  color: #64748b;
+  padding: 40px 0;
+}

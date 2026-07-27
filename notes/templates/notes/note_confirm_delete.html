@@ -1,5 +1,9 @@
+{% extends 'notes/base.html' %}
+{% block title %}Delete{% endblock %}
+{% block content %}
 <h2>Delete "{{ note.title }}"?</h2>
 <form method="post">
   {% csrf_token %}
   <button type="submit">Yes, delete</button>
 </form>
+{% endblock %}

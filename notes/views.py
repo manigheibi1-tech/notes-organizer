@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CourseForm, NoteForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.contrib.auth import login
 
 @login_required
 def course_list(request):
@@ -12,14 +13,17 @@ def course_list(request):
     return render(request, 'notes/course_list.html', {'courses': courses})
 
 def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'notes/register.html', {'form': form})
+        if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+                return redirect('course_list')
+        else:
+            form = UserCreationForm()
+            for field in form.fields.values():
+                field.help_text = None
+        return render(request, 'notes/register.html', {'form': form})
 
 @login_required
 def course_create(request):
@@ -98,3 +102,9 @@ def note_delete(request, course_pk, pk):
         note.delete()
         return redirect('note_list', course_pk=course.pk)
     return render(request, 'notes/note_confirm_delete.html', {'note': note, 'course': course})
+
+@login_required
+def note_detail(request, course_pk, pk):
+    course = get_object_or_404(Course, pk=course_pk, owner=request.user)
+    note = get_object_or_404(Note, pk=pk, course=course)
+    return render(request, 'notes/note_detail.html', {'course': course, 'note': note})

@@ -1,0 +1,33 @@
+{% extends 'notes/base.html' %}
+{% load static %}
+{% block title %}{{ note.title }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'notes/css/note_detail.css' %}">
+{% endblock %}
+{% block content %}
+
+<a href="{% url 'course_list' %}">← Back to courses</a>
+
+<div class="note-detail">
+  <div class="note-detail-header">
+    <h1>{{ note.title }}</h1>
+    <div class="note-detail-meta">
+      <span class="course-badge">{{ course.title }}</span>
+      <span>·</span>
+      <span>{{ note.created_at|date:"M d, Y" }}</span>
+    </div>
+  </div>
+
+  {% if note.description %}
+    <p class="note-detail-description">{{ note.description }}</p>
+  {% endif %}
+
+  <div class="note-detail-content">{{ note.content|linebreaks }}</div>
+
+  <div class="note-detail-actions">
+    <a href="{% url 'note_edit' course.pk note.pk %}" class="btn-primary">Edit</a>
+    <a href="{% url 'note_delete' course.pk note.pk %}" class="danger">Delete</a>
+  </div>
+</div>
+
+{% endblock %}

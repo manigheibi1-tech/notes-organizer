@@ -1,20 +1,36 @@
-<h1>Notes for {{ course.title }}</h1>
-<a href="{% url 'course_list' %}">Back to courses</a>
-<a href="{% url 'note_create' course.pk %}">+ New note</a>
+{% extends 'notes/base.html' %}
+{% load static %}
+{% block title %}Notes for {{ course.title }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'notes/css/note_list.css' %}">
+{% endblock %}
+{% block content %}
 
-<form method="get">
+<a href="{% url 'course_list' %}" class="back-link">← Back to courses</a>
+
+<div class="page-heading">
+  <h1>Notes for {{ course.title }}</h1>
+  <a href="{% url 'note_create' course.pk %}" class="btn-primary">+ New Note</a>
+</div>
+
+<form method="get" class="search-bar">
   <input type="text" name="q" value="{{ query }}" placeholder="Search notes...">
-  <button type="submit">Search</button>
+  <button type="submit" class="btn-secondary">Search</button>
 </form>
 
-<ul>
+<div class="note-grid">
   {% for note in notes %}
-    <li>
-      {{ note.title }}
-      <a href="{% url 'note_edit' course.pk note.pk %}">Edit</a>
-      <a href="{% url 'note_delete' course.pk note.pk %}">Delete</a>
-    </li>
+    <div class="note-card">
+      <a href="{% url 'note_detail' course.pk note.pk %}" class="note-card-title">{{ note.title }}</a>
+      <span class="note-card-date">{{ note.created_at|date:"M d, Y" }}</span>
+      <span class="note-card-actions">
+        <a href="{% url 'note_edit' course.pk note.pk %}">Edit</a>
+        <a href="{% url 'note_delete' course.pk note.pk %}" class="danger">Delete</a>
+      </span>
+    </div>
   {% empty %}
-    <li>No notes found.</li>
+    <p class="empty-state">No notes found.</p>
   {% endfor %}
-</ul>
+</div>
+
+{% endblock %}

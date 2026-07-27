@@ -1,0 +1,64 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  padding: 9px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.note-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-card-title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.note-card-date {
+  color: #94a3b8;
+  font-size: 0.82em;
+}
+
+.note-card-actions {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.note-card-actions a {
+  font-size: 0.85em;
+  margin-inline-end: 10px;
+}
+
+.note-card-actions .danger {
+  color: #dc2626;
+}
+
+.empty-state {
+  color: #94a3b8;
+  padding: 30px 0;
+}
